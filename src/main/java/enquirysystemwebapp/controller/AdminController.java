@@ -28,6 +28,7 @@ import enquirysystemwebapp.models.Batch;
 import enquirysystemwebapp.models.Course;
 import enquirysystemwebapp.models.Feedback;
 import enquirysystemwebapp.models.Query;
+import enquirysystemwebapp.models.Student;
 
 @Controller
 public class AdminController {
@@ -262,5 +263,17 @@ public class AdminController {
 		return redirectView;
 	}
 	
+	
+	@GetMapping("/addStudent")
+	public ModelAndView addStudent() {
+		ModelAndView model=new ModelAndView();
+		model.setViewName("registerStudent");
+		
+		Student student=new Student();
+		model.addObject("student",student);
+		model.addObject("title","Add Student");
+		model.addObject("courses",courseDao.getAllCourses());
+		return model;
+	}
 	
 }
