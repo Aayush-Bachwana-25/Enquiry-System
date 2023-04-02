@@ -10,27 +10,15 @@
 	
 	 <%@include file="./base.jsp" %>
 	 
-	 <style>
-	 	h1{
-	 		display: inline-block;
-	 		width: auto;
-	 	}
-	 	
-	 	.btn btn-secondary{
-	 		align-self: right;
-	 	}
-	 </style>
 </head>
 <body>
-	<h1>Manage Courses</h1><hr/><p>
 	
-	<a href="admindashboard">
-		<button type="button" class="btn btn-secondary">Dashboard</button>
-	</a>
 	
-	<div class="tablediv">
-
-		<table class="table">
+	<div class="container my-5">
+		<h1>Manage Courses</h1><hr/><p>
+		<a class="nav-link text-white float-right my-3" href='<c:url value="/admindashboard"></c:url>' style="background-color: #1a7f42;">Dashboard</a>
+		
+		<table class="table my-5">
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">Course Name</th>
@@ -54,7 +42,7 @@
 			    </c:forEach>
 		   </tbody>
 		</table>
-    
+    	
     </div>
 </body>
 </html>

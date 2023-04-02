@@ -50,17 +50,17 @@
 					    
 						
 						<div class="form-check form-check-inline ml-3">
-						  <input class="form-check-input" type="radio" name="gender" id="male" value="male">
+						  <input class="form-check-input" type="radio" name="gender" id="male" value="male"/>
 						  <label class="form-check-label ml-2" for="male">Male</label>
 						</div>
 						
 						<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="gender" id="female" value="female">
+						  <input class="form-check-input" type="radio" name="gender" id="female" value="female"/>
 						  <label class="form-check-label ml-2" for="female">Female</label>
 						</div>
 						
 						<div class="form-check form-check-inline">
-						  <input class="form-check-input" type="radio" name="gender" id="other" value="other">
+						  <input class="form-check-input" type="radio" name="gender" id="other" value="other"/>
 						  <label class="form-check-label ml-2" for="other">Other</label>
 						</div>
 					</div>
@@ -127,83 +127,40 @@
 				  </div>
 				
 			    <div class="form-group row">
-				     <label for="profileImage" class="col-sm-2 col-form-label"><b>Profile Photo</b><span style="color:red"> *</span></label>
+				     <label for="profile" class="col-sm-2 col-form-label"><b>Profile Photo</b><span style="color:red"> *</span></label>
 				     <div class="col-sm-10">
-			    		<form:input type="file" path="profilePhoto" class="form-control-file" />
+			    		<input type="file" name="profile" class="form-control-file" />
 		    		</div>
 			 	 </div>
 			 	 
 			 	 <div class="form-group row">
-				     <label for="signature" class="col-sm-2 col-form-label"><b>Signature</b><span style="color:red"> *</span></label>
+				     <label for="sign" class="col-sm-2 col-form-label"><b>Signature</b><span style="color:red"> *</span></label>
 				     <div class="col-sm-10">
-			    		<form:input type="file" path="signature" class="form-control-file" />
+			    		<input type="file" name="sign" class="form-control-file" />
 		    		</div>
 			 	 </div>
-			 	 
-			 	 <h1 class="h1 text-center my-5">Enrollment Details</h1>
-			 	 
-			 	 
+			 	  
 			 	 <div class="form-group row">
-				    <label for="courseId" class="col-sm-2 col-form-label"><b>Course</b><span style="color:red"> *</span></label>
+				    <label for="courseId" class="col-sm-2 col-form-label"><b>Course Name</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:select path="courseId" items="${courses}" itemLabel="${courses.courseName}" itemValue="${courses.courseId}" type="number"/>
-				      				      
-				    </div>
-				  </div>
-				  <%-- 
-				  <div class="form-group row">
-				    <label for="batch" class="col-sm-2 col-form-label"><b>Batch</b><span style="color:red"> *</span></label>
-				    <div class="col-sm-10">
-				      <select name="batch" id="batch" class="form-control">
-				        <form:option value="">Select Batch</form:option>
-				        <form:option value="High School"></form:option>
-				        <form:option value="Higher Secondary"></form:option>
-				        <form:option value="Diploma"></form:option>
-				        <form:option value="Graduation"></form:option>
-				        <form:option value="Post-Graduation"></form:option>
-				      </select>
+				      		<form:select path="courseId" class="form-control">
+						        <form:option value="0">Select Course</form:option>
+						        <c:forEach items="${courses}" var="course">
+						            <form:option value="${course.courseId}">${course.courseName}</form:option>
+						        </c:forEach>
+						    </form:select>		      
 				    </div>
 				  </div>
 				  
-				  <div class="form-group row">
-				    <label for="startDate" class="col-sm-2 col-form-label"><b>Start Date</b><span style="color:red"> *</span></label>
-				    <div class="col-sm-10">
-				      <form:input path="startDate" type="date" id="startDate" class="form-control" placeholder="DD-MM-YYYY" />
-				    </div>
-				  </div>
-			 	  --%>
-			 	 <div class="form-group" style="margin-top: 40px;">
-				    <div class="form-check">
-				      <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-				      <label class="form-check-label" for="invalidCheck">
-					        I hereby apply for admission to the above-mentioned course; 
-					        Paying by 
-					        <select name="paymentMode" id="paymentMode">
-						        <option value="">Mode of Payment</option>
-						        <option value="Cash">Cash</option>
-						        <option value="Cheque">Cheque</option>
-						        <option value="Demand Draft">Demand Draft</option>
-					      	</select>
-					     
-					      for <b>&#x20B9;</b>&nbsp;
-					      <input type="number" id="fees" value="${course.fees}" placeholder="Course fees" disabled="disabled">
-					      the cheque/DD no. 
-					      <input name="chequeNo" type="number" id="chequeNo" placeholder="Cheque Number(if applicable)" />
-					      of 
-					      <input name="bankname" type="number" id="bankname" placeholder="Bank Name(if applicable)" /> .
-					      I agree to abide by the rules & regulations of the institute.
-				       </label>
-				      <div class="invalid-feedback">
-				        You must agree before submitting.
-				      </div>
-				    </div>
-				  </div>
-			 	 
-			 	 <div style="text-align: center;">
-				 	  <form:button type="submit" class="btn btn-primary">Register</form:button>
-				 	  <a href="admindashboard" class="btn btn-secondary ml-1" role="button" aria-disabled="true">Back</a>
+				  <div style="text-align: center;">
+				 	  <form:button type="submit" class="btn btn-primary">Next</form:button>
+				 	  <a href="admindashboard" class="btn btn-secondary ml-1" role="button" aria-disabled="true">Cancel</a>
 			 	  </div>
 		    </form:form>
 		</div>    
+		
+		<script>
+			
+		</script>
 </body>
 </html>

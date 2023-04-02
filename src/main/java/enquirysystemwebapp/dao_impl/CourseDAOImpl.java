@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.ast.ReturnStatement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import enquirysystemwebapp.dao.CourseDAO;
 import enquirysystemwebapp.helper.ConnectionProvider;
 import enquirysystemwebapp.models.Course;
+import enquirysystemwebapp.models.CreativeCornerModel;
 
 
 
@@ -54,7 +56,7 @@ public class CourseDAOImpl implements CourseDAO{
 		this.course = course;
 	}
 
-	public boolean addCourse(Course course,HttpSession session) {
+	public int addCourse(Course course,HttpSession session) {
 		// TODO Auto-generated method stub
 		try {
 			MultipartFile file=course.getImageData();
@@ -88,7 +90,7 @@ public class CourseDAOImpl implements CourseDAO{
 				ResultSet generatedKeys = pst.getGeneratedKeys();
 		        if (generatedKeys.next()) {
 		            int id = generatedKeys.getInt(1); // get the generated ID value
-		            course.setCourseId(id); // set the generated ID on the course object
+		            return id;
 		        
 		        } 
 		        else {
@@ -98,21 +100,13 @@ public class CourseDAOImpl implements CourseDAO{
 			catch(SQLException ee) {
 				ee.printStackTrace();
 			}
-			if(course.getCourseId()!=0) {
-				session.setAttribute("courseid", course.getCourseId());
-				session.setAttribute("coursename", course.getCourseName());
-				System.out.println("Course added successfully");
-				System.out.println(course.getCourseId());
-				System.out.println(course.getCourseName());
-				return true;
-			}
 		}
 		catch(Exception ee) {
 			ee.printStackTrace();
 		}
 		
 		
-		return false;
+		return -1;
 		
 	}
 
@@ -225,5 +219,136 @@ public class CourseDAOImpl implements CourseDAO{
 		return null;
 	}
 
+	public int getNumberOfDaysOfCourseByCourseId(int courseId) {
+		// TODO Auto-generated method stub
+		try {
+			String query="select DATEDIFF(end_date, start_date) from courses where course_id=?";
+			PreparedStatement pst=con.prepareStatement(query);
+			pst.setInt(1, courseId);
+			ResultSet rs=pst.executeQuery();
+			
+			while(rs.next()) {
+				return rs.getInt(1);
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	public List<Course> getAllCoursesHavingYtLinks(){
+		List<Course> list=new ArrayList<Course>();
+		try {
+			Statement st=con.createStatement();
+			ResultSet rs=st.executeQuery("select * from courses where course_id in (select course_id from creative_corner)");
+			
+			while(rs.next()) {
+				Course course=new Course();
+				course.setCourseId(rs.getInt(1));
+				course.setCourseName(rs.getString(2));
+				course.setAgeGroup(rs.getString(3));
+				course.setNoOfHrs(rs.getInt(4));
+				course.setStartDate(rs.getDate(5).toString());
+				course.setEndDate(rs.getDate(6).toString());
+				course.setFees(rs.getInt(7));
+				course.setAbout(rs.getString(8));
+				course.setImage(rs.getString(9));
+				
+				list.add(course);	
+			}
+		}
+		catch(Exception ee) {
+			ee.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<String> getYtLinksForCreativeCornerByCourseId(int courseId) {
+		// TODO Auto-generated method stub
+		try {
+			//Select latest 8 videos
+			String query="select link from creative_corner where course_id=?  order by link_id desc limit 8";
+			PreparedStatement pst=con.prepareStatement(query);
+			pst.setInt(1, courseId);
+			ResultSet rs=pst.executeQuery();
+			
+			List<String> links=new ArrayList<String>();
+			
+			while(rs.next()) {
+				String url=rs.getString(1);
+				String videoCode = "";
+				String[] urlParams = url.split("&");
+				for (String param : urlParams) {
+				    if (param.contains("v=")) {
+				        videoCode = param.substring(param.indexOf("v=")+2);
+				        System.out.println(videoCode);
+				        break;
+				    }
+				}
+				
+				links.add(videoCode);
+			}
+			
+			return (links.size()>0) ? links:  null;
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<CreativeCornerModel> getAllYtLinksForCreativeCorner() {
+		// TODO Auto-generated method stub
+		try {
+			//Select latest 8 videos
+			String query="select link_id,course_id,link from creative_corner";
+			PreparedStatement pst=con.prepareStatement(query);
+			
+			ResultSet rs=pst.executeQuery();
+			
+			List<CreativeCornerModel> links=new ArrayList<CreativeCornerModel>();
+			
+			while(rs.next()) {
+				CreativeCornerModel model=new CreativeCornerModel();
+				model.setLinkId(rs.getInt(1));
+				model.setCourseId(rs.getInt(2));
+				model.setUrl(rs.getString(3));
+				links.add(model);
+			}
+			return links;
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public boolean saveYtLinkToDB(CreativeCornerModel model) {
+		// TODO Auto-generated method stub
+		try {
+			String query="insert into creative_corner(course_id,link) values(?,?)";
+			PreparedStatement pst=con.prepareStatement(query);
+			pst.setInt(1, model.getCourseId());
+			pst.setString(2, model.getUrl());
+			int affectedRows=pst.executeUpdate();
+			
+			if(affectedRows>0) {
+				return true;
+			}
+			
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	
 }

@@ -30,6 +30,5 @@
 			  <form:button type="submit" class="btn btn-primary">Submit</form:button>
 			</form:form>
 		</div>
-	</div>
 </body>
 </html>

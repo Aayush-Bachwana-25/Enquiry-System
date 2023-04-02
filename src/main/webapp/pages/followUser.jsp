@@ -8,8 +8,11 @@
 </head>
 <body>
 	<%@include file="./navbar.jsp" %>
+<!--setting query-id to retrieve details on next page -->
 	<c:set var="enquiryId" value="${enquiry.id}" scope="session"/>
 	<c:set var="url" value="${requestScope.requestURL}" scope="session"/>
+	
+<!-- 	error msg -->
 	<div class="container">
 		<c:if test="${not empty sessionScope.message}">
 			  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
@@ -68,14 +71,15 @@
 			   </tbody>
 			</table>
 			
+
 			<div style="text-align: center;">
 			  
 			  <button type="submit" class="btn btn-primary">Update</button>
-			  <a href="#" class="btn btn-danger ml-1" role="button" aria-disabled="true">Cancel</a>
+			  <a href="<c:url value="/admindashboard" />" class="btn btn-danger ml-1" role="button" aria-disabled="true">Cancel</a>
 			  
 			</div>
 			
-			<a href="registerStudent" class="btn btn-success ml-1 float-right" role="button" aria-disabled="true">Register Student</a>
+			<a href="addStudent" class="btn btn-success ml-1 float-right" role="button" aria-disabled="true">Register Student</a>
 
 		</form>
     

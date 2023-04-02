@@ -36,5 +36,6 @@
 <bean id="coursedao" class="enquirysystemwebapp.dao_impl.CourseDAOImpl"/>
 <bean id="enquirydao" class="enquirysystemwebapp.dao_impl.EnquiryDAOImpl"/>     
 <bean id="studentdao" class="enquirysystemwebapp.dao_impl.StudentDAOImpl"/>
+<bean id="gallerydao" class="enquirysystemwebapp.dao_impl.GalleryDAOImpl"/>
 	
 </beans>

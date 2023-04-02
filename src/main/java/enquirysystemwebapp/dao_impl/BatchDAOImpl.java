@@ -46,8 +46,30 @@ public class BatchDAOImpl implements BatchDAO {
 
 	}
 
-	public void updateBatch(Batch batch) {
+	public boolean updateBatch(Batch batch) {
 		// TODO Auto-generated method stub
+		try {
+			String query="update batches set batch_name=?,timings=? where batch_id=?";
+			
+			PreparedStatement pst=con.prepareStatement(query);
+			pst.setString(1, batch.getName());
+			pst.setString(2, batch.getTimings());
+			pst.setInt(3, batch.getId());
+			int affectedRows=pst.executeUpdate();
+			
+			if (affectedRows == 0) {
+				System.out.println("Batch not updated!");
+		        return false;
+		    }
+			else {
+				System.out.println("Batch updated!");
+				return true;
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
 
 	}
 
@@ -70,6 +92,26 @@ public class BatchDAOImpl implements BatchDAO {
 
 	public Batch getBatchById(int batchId) {
 		// TODO Auto-generated method stub
+		try {
+			String query="select * from batches where batch_id=?";
+			PreparedStatement pst=con.prepareStatement(query);
+			pst.setInt(1, batchId);
+			
+			ResultSet rs=pst.executeQuery();
+			
+			while(rs.next()) {
+				Batch batch=new Batch();
+				batch.setId(rs.getInt(1));
+				batch.setCourseId(rs.getInt(2));
+				batch.setName(rs.getString(3));
+				batch.setTimings(rs.getString(4));	
+				return batch;
+			}
+		}
+		catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -86,6 +128,7 @@ public class BatchDAOImpl implements BatchDAO {
 			while(rs.next()) {
 				Batch batch=new Batch(courseId);
 				batch.setId(rs.getInt(1));
+				batch.setCourseId(rs.getInt(2));
 				batch.setName(rs.getString(3));
 				batch.setTimings(rs.getString(4));
 				

@@ -44,7 +44,7 @@
 			  <img class="card-img-top" src='<c:url value="/resources/images/courses.png"></c:url>' alt="Card image cap">
 			  
 			  <div class="card-body">
-			    <h5 class="card-title">Courses</h5>
+			    <h5 class="card-title">Actions</h5>
 			  </div>
 			  
 			  <ul class="list-group list-group-flush">
@@ -52,7 +52,7 @@
 			    	<a href="viewqueries" class="card-link">View/Manage Queries</a>
 		    	</li>
 			    <li class="list-group-item">
-			    	<a href="#" class="card-link">Register Student</a>
+			    	<a href="addStudent" class="card-link">Register Student</a>
 		    	</li>
 		    	<li class="list-group-item">
 			    	<a href="#" class="card-link">Annexure-I</a>
@@ -64,18 +64,18 @@
 			  <img class="card-img-top" src='<c:url value="/resources/images/courses.png"></c:url>' alt="Card image cap">
 			  
 			  <div class="card-body">
-			    <h5 class="card-title">Courses</h5>
+			    <h5 class="card-title">Gallery</h5>
 			  </div>
 			  
 			  <ul class="list-group list-group-flush">
 			    <li class="list-group-item">
-			    	<a href="addcourse" class="card-link">Add Courses</a>
+			    	<a href="manageAlbums" class="card-link">Manage Albums</a>
 		    	</li>
 			    <li class="list-group-item">
-			    	<a href="managecourses" class="card-link">Manage Courses</a>
+			    	<a href="creative-corner" class="card-link">Creative Corner</a>
 		    	</li>
 		    	<li class="list-group-item">
-			    	<a href="managebatches" class="card-link">Manage Batches</a>
+			    	<a href="#" class="card-link">Courses Thumbnails</a>
 		    	</li>
 			  </ul>
 		</div>

@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ page isELIgnored="false" %>
+
  <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
+ <%@ page isELIgnored="false" %>
  
 
 <!DOCTYPE html>
@@ -14,19 +16,14 @@
 <body>
 
 	<%@include file="./navbar.jsp" %>
-	<h1 class="h1 text-center m-3">Create Batch for course: <span style="{font-style: italic;}">${requestScope.courseName}</span></h1>
-	
-	<!-- 	error msg -->
-	<c:if test="${not empty sessionScope.message}">
-	  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
-	    ${sessionScope.message.messageContent}
-	  </div>
-	  <c:remove var="message" scope="session"/>
-	</c:if>
-	 
 	
 	<div class="container">
-		<form:form method="post" modelAttribute="ns" class="form-horizontal">
+		<h1 class="h1 text-center m-3">Edit Batch </h1>
+		 
+	
+		<form:form method="post" modelAttribute="batch" class="form-horizontal">
+			<form:input type="hidden" path="id" class="form-control" />
+			<form:input type="hidden" path="courseId" class="form-control" />
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Batch Name:</label>
 				<div class="col-sm-10">
@@ -48,7 +45,7 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<input type="submit" value="Create Batch" class="btn btn-primary"/>
+					<input type="submit" value="Modify Batch" class="btn btn-success"/>
 					<a href="/admindashboard" class="btn btn-secondary ml-1" role="button" aria-disabled="true">Back</a>
 				</div>
 			</div>

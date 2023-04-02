@@ -9,8 +9,18 @@
 <body>
 	<%@include file="./navbar.jsp" %>
 	
-	<h1 class="h1 text-center my-5">Manage Batches for : <u>${requestScope.courseName}</u></h1>
+	<h1 class="h1 text-center my-5">Manage Batches for : <u>${course.courseName}</u></h1>
     <div class="container">
+    
+    <!-- 	error msg -->
+		<c:if test="${not empty sessionScope.message}">
+		  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
+		    ${sessionScope.message.messageContent}
+		  </div>
+		  <c:remove var="sessionScope.message" scope="session"/>
+		</c:if>
+		
+		
 		<table class="table">
 		  <thead class="thead-dark">
 		    <tr>

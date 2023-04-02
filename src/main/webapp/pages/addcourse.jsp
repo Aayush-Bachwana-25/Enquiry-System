@@ -67,7 +67,7 @@
 				  <div class="form-group row">
 				    <label for="fees" class="col-sm-2 col-form-label"><b>Fees</b></label>
 				    <div class="col-sm-10">
-				      <form:input path="fees" id="fees" class="form-control" /><span style="color:red">*</span>
+				      <form:input path="fees" id="fees" class="form-control" placeholder="Value in INR"/><span style="color:red">*</span>
 				    </div>
 				  </div>
 				

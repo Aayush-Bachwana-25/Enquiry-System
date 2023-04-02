@@ -46,7 +46,7 @@
 		  <tbody>
 			  <c:forEach var="course"  items="${courses}">
 			    <tr>
-			      <td scope="row"><a href="#">${course.courseName}</a></td>
+			      <td scope="row"><a href='viewCourse/${course.courseId}'>${course.courseName}</a></td>
 			      <td>${course.ageGroup}</td>
 			      <td>${course.noOfHrs}</td>
 			      <td><b>&#x20B9;</b>&nbsp;${course.fees}</td>

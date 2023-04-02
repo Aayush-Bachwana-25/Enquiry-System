@@ -1,6 +1,7 @@
 package enquirysystemwebapp.models;
 
 public class Student {
+	//registration details
 	private int studentId;
 	private String studentName;
 	private String motherName;
@@ -17,6 +18,12 @@ public class Student {
 	private String educationalQualification;
 	private String profilePhoto;
 	private String signature;
+	
+	
+	//enrollment details
+	private int courseId;
+	private int batchId;
+	
 	
 	
 	public int getStudentId() {
@@ -115,10 +122,18 @@ public class Student {
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
-	
-	
-	
-	
+	public int getCourseId() {
+		return courseId;
+	}
+	public void setCourseId(int courseId) {
+		this.courseId = courseId;
+	}
+	public int getBatchId() {
+		return batchId;
+	}
+	public void setBatchId(int batchId) {
+		this.batchId = batchId;
+	}
 	
 	
 }
