@@ -12,11 +12,10 @@
 
 	
 	<div class="container">
+		<h1 class="h1 my-5 text-center">Today's queries</h1>
+	
 		<table class="table">
 		  <thead class="thead-dark">
-		  <tr>
-		      <td colspan="7" style="{text-align: center;}">Today's Queries</td>
-		    </tr>
 		    <tr>
 		      <th scope="col">Candidate Name</th>
 		      <th scope="col">Parent Name</th>
@@ -25,7 +24,6 @@
 		      <th scope="col">Date of Enquiry</th>
 		      <th scope="col">Query</th>
 		      <th scope="col">Follow Date</th>
-		      <th scope="col">Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -38,12 +36,11 @@
 			      <td>${enquiry.enquiry_date}</td>
 			      <td>${enquiry.query}</td>
 			      <td><b>${enquiry.follow_date}</b></td>
-			      <td><a href="#">Enroll Student</a></td>
 			    </tr>
 			    </c:forEach>
 		   </tbody>
 		</table>
-    
+    	<%@include file="./message.jsp" %>
     </div>
 </body>
 </html>

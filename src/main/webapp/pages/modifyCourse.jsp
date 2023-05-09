@@ -1,112 +1,104 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-   
+    
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
+<meta charset="ISO-8859-1">
 	<%@include file="./base.jsp" %>
 </head>
 <body>
-	
-	<form:form method="post" modelAttribute="course" enctype="multipart/form-data">
-			<table>
-				<tr>
-					<td>
-						<form:label path="courseName"><b>Course Name</b></form:label>
-					</td>
-					
-					<td>
-						<form:input path="courseName" value="${course.courseName}"/><span style="color:red">*</span>
-					</td>
-				</tr>
-				
-				<tr>
-					<td>
-						<form:label path="ageGroup"><b>Age Group</b><br/><span style="color:orange">*Required</span></form:label>
-					</td>
-					
-					<td>	
-						<form:select path="ageGroup">
-						<form:option value="${course.ageGroup}">Select Group</form:option>
-							<form:option value="0-10">0-10 years</form:option>
-							<form:option value="10-20">10-20 years</form:option>
-							<form:option value="20-30">20-30 years</form:option>
-						</form:select>
-						<span style="color:red">*</span>
-					</td>
-				</tr>
-				
-				<tr>
-					<td>
-						<form:label path="noOfHrs"><b>No. of Hrs</b><br/><span style="color:orange">*Required</span></form:label>
-					</td>
-					
-					<td>
-						<form:input path="noOfHrs" type="number" value="${course.noOfHrs}"/><span style="color:red">*</span>
-					</td>
-					
-				</tr>
-				
-				<tr>
-					<td>
-						<form:label path="startDate"><b>Start Date</b><br/><span style="color:orange">*Required</span></form:label>
-					</td>
-					
-					<td>
-						<form:input path="startDate" type="date" placeholder="DD-MM-YYYY" value="${course.startDate}"/><span style="color:red">*</span>
-					</td>
-				</tr>
-				
-				
-				<tr>
-					<td>
-						<form:label path="endDate"><b>End Date</b></form:label>
-					</td>
-					
-					<td>
-						<form:input path="endDate" type="date" placeholder="DD-MM-YYYY" value="${course.endDate}"/><span style="color:red">*</span>
-					</td>
-					
-				</tr>
-				
-				<tr>
-					<td>
-						<form:label path="fees"><b>Fees</b></form:label>
-					</td>
-					
-					<td>
-						<form:input path="fees" value="${course.fees}"/><span style="color:red">*</span>
-					</td>
-					
-				</tr>
-				
-				<tr>
-					<td>
-						<form:label path="about"><b>About</b></form:label>
-					</td>
-					
-					<td>
-						<form:input path="about" value="${course.about}" type="textarea"/><span style="color:red">*</span>
-					</td>
-					
-				</tr>
-				
-				<tr>
-					<td>
-						<form:label path="imageData"><b>Image</b></form:label>
-					</td>
-					
-					<td>
-						<form:input path="imageData" type="file"/><span style="color:red">*</span>
-					</td>
-					
-				</tr> 
-				
-			</table>	
-			<form:button type="submit">Update</form:button>
+		<%@include file="./navbar.jsp" %>
+		<h1 class="h1 text-center m-3">Edit Course</h1>
 		
-		</form:form>
+<!-- 	error msg -->
+		<c:if test="${not empty requestScope.message}">
+		  <div class="alert alert-${requestScope.message.type} container text-center" role="alert">
+		    ${requestScope.message.messageContent}
+		  </div>
+		</c:if>
+		
+		
+		<div class="container mb-5">
+			<form:form method="post" modelAttribute="course" enctype="multipart/form-data">
+				  <div class="form-group row">
+				    <label for="courseName" class="col-sm-2 col-form-label"><b>Course Name</b><span style="color: red"> *</span></label>
+				    <div class="col-sm-10">
+				      <form:input path="courseName" id="courseName" class="form-control" />
+				    </div>
+				  </div>
+				
+				  <div class="form-group row">
+				    <label for="ageGroup" class="col-sm-2 col-form-label"><b>Age Group</b><span style="color: red"> *</span></label>
+				    <div class="col-sm-10">
+				      <form:select path="ageGroup" id="ageGroup" class="form-control">
+				        <form:option value="">Select Group</form:option>
+				        <form:option value="0-10">0-10 years</form:option>
+				        <form:option value="10-20">10-20 years</form:option>
+				        <form:option value="20-30">20-30 years</form:option>
+				      </form:select>
+				    </div>
+				  </div>
+				
+				  <div class="form-group row">
+				    <label for="noOfHrs" class="col-sm-2 col-form-label"><b>No. of Hrs</b><span style="color: red"> *</span></label>
+				    <div class="col-sm-10">
+				      <form:input path="noOfHrs" type="number" id="noOfHrs" class="form-control" />
+				    </div>
+				  </div>
+				
+				  <div class="form-group row">
+				    <label for="startDate" class="col-sm-2 col-form-label"><b>Start Date</b><span style="color: red"> *</span></label>
+				    <div class="col-sm-10">
+				      <form:input path="startDate" type="date" id="startDate" class="form-control" placeholder="DD-MM-YYYY" />
+				    </div>
+				  </div>
+				
+				  <div class="form-group row">
+				    <label for="endDate" class="col-sm-2 col-form-label"><b>End Date</b></label>
+				    <div class="col-sm-10">
+				      <form:input path="endDate" type="date" id="endDate" class="form-control" placeholder="DD-MM-YYYY" />
+				    </div>
+				  </div>
+				  
+				  <div class="form-group row">
+				    <label for="fees" class="col-sm-2 col-form-label"><b>Fees</b><span style="color: red"> *</span></label>
+				    <div class="col-sm-10">
+				      <form:input path="fees" id="fees" class="form-control" placeholder="Value in INR"/>
+				    </div>
+				  </div>
+				
+				  <div class="form-group row">
+				    <label for="about" class="col-sm-2 col-form-label"><b>About</b><span style="color: red"> *</span></label>
+				    <div class="col-sm-10">
+				      <form:input path="about" id="about" class="form-control" />
+				    </div>
+			    </div>	
+			    
+			    <div class="form-group row">
+				     <label for="imageData" class="col-sm-2 col-form-label"><b>Course Image</b><span style="color: red"> *</span></label>
+				     <div class="col-sm-10">
+			    		<form:input type="file" path="imageData" class="form-control-file" />
+		    		</div>
+			 	 </div>
+			 	 
+				  <div class="form-group row">
+				    <label for="presentationDate" class="col-sm-2 col-form-label"><b>Presentation Date</b></label>
+				    <div class="col-sm-10">
+				      <form:input path="presentationDate" type="date" id="presentationDate" class="form-control" placeholder="DD-MM-YYYY" />
+				    </div>
+				  </div>
+				  
+				
+			 	 
+			 	  <form:button type="submit" class="btn btn-primary">Edit Course</form:button>
+			 	  <a href='<c:url value="/admindashboard"></c:url>' class="btn btn-secondary ml-1" role="button" aria-disabled="true">Back</a>
+		    </form:form>
+		</div>    
+		
+		
+
 </body>
 </html>

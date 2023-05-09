@@ -11,21 +11,34 @@
 
 	
     <%@include file="./base.jsp" %>
+    
+    <style type="text/css">
+    	p{
+    		font-size: 20px;
+    	}
+    	
+    	h3{
+    		margin-top: 10px;
+    	}
+    	.item{
+    		text-decoration: underline;
+    	}
+    </style>
 </head>
 <body>
     <%@include file="./navbar.jsp" %>
-    <div class="container">
+    <div class="container my-5">
 		<h1>About us:</h1><hr/>
 		<h3>We believe:</h3>
-		To learn and work successfully in an increasingly information-rich society, one must be able to use technology effectively and creatively. This applies to all strata of society...students, teachers, professionals, homemakers and senior citizens.
+		<p>To learn and work successfully in an increasingly information-rich society, one must be able to use technology effectively and creatively. This applies to all strata of society...students, teachers, professionals, homemakers and senior citizens.</p>
 		<h1></h1>
 		<h3>Our Mission:</h3>
-		To develop capable users of Information Technology who will effectively and creatively use the most amazing machine – a PC!
+		<p>To develop capable users of Information Technology who will effectively and creatively use the most amazing machine - a PC!</p>
 	 	<h1></h1>
 		<h3>What we offer:</h3>
-	 	<p>
-		<b>Customized Workshops to empower the user:</b>
-		These workshops are designed keeping in mind the individual needs of students, teachers, professionals, homemakers and Senior Citizens.
+	 	<br/>
+		<h5 class="item">Customized Workshops to empower the user:</h5>
+		<p>These workshops are designed keeping in mind the individual needs of students, teachers, professionals, homemakers and Senior Citizens.</p>
  	</div>
     
 </body>

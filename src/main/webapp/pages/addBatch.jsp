@@ -16,28 +16,24 @@
 	<%@include file="./navbar.jsp" %>
 	<h1 class="h1 text-center m-3">Create Batch for course: <span style="{font-style: italic;}">${requestScope.courseName}</span></h1>
 	
-	<!-- 	error msg -->
-	<c:if test="${not empty sessionScope.message}">
-	  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
-	    ${sessionScope.message.messageContent}
-	  </div>
-	  <c:remove var="message" scope="session"/>
-	</c:if>
+	
+	<%@include file="./message.jsp" %>
+			
 	 
 	
 	<div class="container">
 		<form:form method="post" modelAttribute="ns" class="form-horizontal">
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Batch Name:</label>
+				<label class="col-sm-2 control-label">Batch Name: <span style="color: red"> *</span></label>
 				<div class="col-sm-10">
-					<form:input path="name" class="form-control"/>
+					<form:input path="name" class="form-control" required="true"/>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Batch Timings:</label>
+				<label class="col-sm-2 control-label">Batch Timings: <span style="color: red"> *</span></label>
 				<div class="col-sm-10">
-					<form:select path="timings" class="form-control">
+					<form:select path="timings" class="form-control"  required="true">
 						<form:option value="">Select Timings</form:option>
 						<form:option value="10:00 AM - 01:00 PM">10:00 AM - 01:00 PM</form:option>
 						<form:option value="01:00 PM - 04:00 PM">01:00 PM - 04:00 PM</form:option>

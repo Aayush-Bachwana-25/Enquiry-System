@@ -25,16 +25,16 @@
 			<form:input type="hidden" path="id" class="form-control" />
 			<form:input type="hidden" path="courseId" class="form-control" />
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Batch Name:</label>
+				<label class="col-sm-2 control-label">Batch Name: <span style="color: red"> *</span></label>
 				<div class="col-sm-10">
-					<form:input path="name" class="form-control"/>
+					<form:input path="name" class="form-control" required="true"/>
 				</div>
 			</div>
 			
 			<div class="form-group">
-				<label class="col-sm-2 control-label">Batch Timings:</label>
+				<label class="col-sm-2 control-label">Batch Timings: <span style="color: red"> *</span></label>
 				<div class="col-sm-10">
-					<form:select path="timings" class="form-control">
+					<form:select path="timings" class="form-control" required="true">
 						<form:option value="">Select Timings</form:option>
 						<form:option value="10:00 AM - 01:00 PM">10:00 AM - 01:00 PM</form:option>
 						<form:option value="01:00 PM - 04:00 PM">01:00 PM - 04:00 PM</form:option>
@@ -45,8 +45,8 @@
 			
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<input type="submit" value="Modify Batch" class="btn btn-success"/>
-					<a href="/admindashboard" class="btn btn-secondary ml-1" role="button" aria-disabled="true">Back</a>
+					<input type="submit" value="Modify Batch" class="btn btn-primary"/>
+					<a href='<c:url value="/admindashboard"></c:url>' class="btn btn-secondary ml-1" role="button" aria-disabled="true">Back</a>
 				</div>
 			</div>
 		</form:form>

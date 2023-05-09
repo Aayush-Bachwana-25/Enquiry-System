@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import enquirysystemwebapp.dao.AdminDAO;
 import enquirysystemwebapp.helper.ConnectionProvider;
@@ -46,5 +45,6 @@ public class AdminDAOImpl implements AdminDAO{
 		return true;
 		
 	}
+
 
 }

@@ -19,19 +19,25 @@
 			<p>
 			<form:form method="post" modelAttribute="album">			  
 			  <div class="form-group row">
-			    <label for="albumName" class="col-sm-2 col-form-label"><b>Album Name</b></label>
+			    <label for="albumName" class="col-sm-2 col-form-label"><b>Album Name</b><span style="color: red"> *</span></label>
 			    <div class="col-sm-10">
-			      <form:input path="albumName" id="albumName" class="form-control" /><span style="color:red">*</span>
+			      <form:input path="albumName" id="albumName" class="form-control"  required="true"/>
 			    </div>
 			  </div>
 			  
 			  <div class="form-group row">
 			    <label for="albumDescription" class="col-sm-2 col-form-label"><b>Description</b><span style="color:red"> *</span></label>
 			    <div class="col-sm-10">
-			      <form:textarea path="albumDescription" class="form-control"  rows="3"></form:textarea>
+			      <form:textarea path="albumDescription" class="form-control"  rows="3"  required="true"></form:textarea>
 			    </div>
 			  </div>
 				  
+			  <div class="form-group row">
+				    <label for="validityDate" class="col-sm-2 col-form-label"><b>Valid till</b><span style="color: red"> *</span></label>
+				    <div class="col-sm-10">
+				      <form:input path="validityDate" type="date" id="validityDate" class="form-control" placeholder="DD-MM-YYYY"  required="true"/>
+				    </div>
+				  </div>
 			  
 		      <div class="form-group row">
 		           <div class="col-sm-10 offset-sm-2">

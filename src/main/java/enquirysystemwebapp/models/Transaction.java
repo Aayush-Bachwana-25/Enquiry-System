@@ -7,6 +7,7 @@ public class Transaction {
 	private String chequeNo;
 	private String bankName;
 	private String transactionDate;
+	private String mode;
 	
 	
 	public Transaction() {
@@ -57,6 +58,15 @@ public class Transaction {
 	public void setTransactionDate(String transactionDate) {
 		this.transactionDate = transactionDate;
 	}
+	
+	public String getMode() {
+		return mode;
+	}
+
+	public void setMode(String mode) {
+		this.mode = mode;
+	}
+
 	@Override
 	public String toString() {
 		return "Transaction [studentId=" + studentId + ", courseId=" + courseId + ", chequeNo=" + chequeNo

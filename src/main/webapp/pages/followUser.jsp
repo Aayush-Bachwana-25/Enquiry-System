@@ -12,15 +12,12 @@
 	<c:set var="enquiryId" value="${enquiry.id}" scope="session"/>
 	<c:set var="url" value="${requestScope.requestURL}" scope="session"/>
 	
-<!-- 	error msg -->
+
 	<div class="container">
-		<c:if test="${not empty sessionScope.message}">
-			  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
-			    ${sessionScope.message.messageContent}
-			  </div>
-			  <c:remove var="message" scope="session"/>
-		</c:if>
 		
+		<%@include file="./message.jsp" %>
+	
+		<h1 class="h1 my-5 text-center">Follow-Up User </h1>
 		<form method="post" action="saveFollowUp">
 			<table class="table">
 			  <thead class="thead-dark">
@@ -75,11 +72,11 @@
 			<div style="text-align: center;">
 			  
 			  <button type="submit" class="btn btn-primary">Update</button>
-			  <a href="<c:url value="/admindashboard" />" class="btn btn-danger ml-1" role="button" aria-disabled="true">Cancel</a>
+			  <a href="<c:url value="/admin/viewqueries" />" class="btn btn-danger ml-1" role="button" aria-disabled="true">Cancel</a>
 			  
 			</div>
 			
-			<a href="addStudent" class="btn btn-success ml-1 float-right" role="button" aria-disabled="true">Register Student</a>
+			<a href='<c:url value="/admin/addStudent"></c:url>' class="btn btn-success ml-1 float-right" role="button" aria-disabled="true">Register Student</a>
 
 		</form>
     

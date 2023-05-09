@@ -15,10 +15,13 @@
 	
 	
 	<div class="container my-5">
-		<h1>Manage Courses</h1><hr/><p>
+		<h1 style="display: inline;">Manage Courses</h1>
 		<a class="nav-link text-white float-right my-3" href='<c:url value="/admindashboard"></c:url>' style="background-color: #1a7f42;">Dashboard</a>
 		
-		<table class="table my-5">
+		<hr/><p>
+			
+		<%@include file="./message.jsp" %>
+		<table class="table my-2">
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">Course Name</th>
@@ -30,7 +33,7 @@
 		  <tbody>
 			  <c:forEach var="course"  items="${courses}">
 			    <tr>
-			      <td scope="row"><a href="#">${course.courseName}</a></td>
+			      <td scope="row"><b>${course.courseName}</b></td>
 			      <td>${course.ageGroup}</td>
 			      <td>${course.noOfHrs}</td>
 			      <td>

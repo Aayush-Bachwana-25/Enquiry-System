@@ -19,14 +19,14 @@
 				  <div class="form-group row">
 				    <label for="studentName" class="col-sm-2 col-form-label"><b>Student Name</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:input path="studentName" id="studentName" class="form-control" />
+				      <form:input path="studentName" id="studentName" class="form-control"  required="true"/>
 				    </div>
 				  </div>
 				  
 				  <div class="form-group row">
 				    <label for="fatherName" class="col-sm-2 col-form-label"><b>Father Name</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:input path="fatherName" id="fatherName" class="form-control" />
+				      <form:input path="fatherName" id="fatherName" class="form-control"  required="true"/>
 				    </div>
 				  </div>
 				  
@@ -40,7 +40,7 @@
 				  <div class="form-group row">
 				    <label for="dateOfBirth" class="col-sm-2 col-form-label"><b>Date of Birth</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:input path="dateOfBirth" type="date" id="dateOfBirth" class="form-control" placeholder="DD-MM-YYYY" />
+				      <form:input path="dateOfBirth" type="date" id="dateOfBirth" class="form-control" placeholder="DD-MM-YYYY"  required="true"/>
 				    </div>
 				  </div>
 				  
@@ -70,7 +70,7 @@
 				  <div class="form-group row">
 				    <label for="residentialAddress" class="col-sm-2 col-form-label"><b>Residential Address</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:textarea path="residentialAddress" id="residentialAddress" class="form-control"  rows="2"></form:textarea>
+				      <form:textarea path="residentialAddress" id="residentialAddress" class="form-control"  rows="2" required="true"></form:textarea>
 				    </div>
 				  </div>
 				  
@@ -84,7 +84,7 @@
 				  <div class="form-group row">
 				    <label for="mobile" class="col-sm-2 col-form-label"><b>Mobile</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:input path="mobile" id="mobile" class="form-control" value="" />
+				      <form:input path="mobile" id="mobile" class="form-control" value=""  required="true"/>
 				    </div>
 				  </div>
 				  
@@ -107,7 +107,7 @@
 				  <div class="form-group row">
 				    <label for="email" class="col-sm-2 col-form-label"><b>Email</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:input path="email" type="email" id="email" class="form-control" value="" />
+				      <form:input path="email" type="email" id="email" class="form-control" required="true"/>
 				    </div>
 				  </div>
 				
@@ -143,7 +143,7 @@
 			 	 <div class="form-group row">
 				    <label for="courseId" class="col-sm-2 col-form-label"><b>Course Name</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      		<form:select path="courseId" class="form-control">
+				      		<form:select path="courseId" class="form-control"  required="true">
 						        <form:option value="0">Select Course</form:option>
 						        <c:forEach items="${courses}" var="course">
 						            <form:option value="${course.courseId}">${course.courseName}</form:option>
@@ -154,7 +154,7 @@
 				  
 				  <div style="text-align: center;">
 				 	  <form:button type="submit" class="btn btn-primary">Next</form:button>
-				 	  <a href="admindashboard" class="btn btn-secondary ml-1" role="button" aria-disabled="true">Cancel</a>
+				 	  <a href='<c:url value="/admindashboard"></c:url>' class="btn btn-secondary ml-1" role="button" aria-disabled="true">Cancel</a>
 			 	  </div>
 		    </form:form>
 		</div>    

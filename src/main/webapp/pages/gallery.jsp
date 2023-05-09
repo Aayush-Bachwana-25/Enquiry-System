@@ -9,30 +9,48 @@
 <body>
 	<%@include file="./navbar.jsp" %>
 	
-	
-	<h1 class="h1">Albums</h1>
-	
-	<!-- 	error msg if no videos are available to display -->
-		<c:if test="${not empty sessionScope.message}">
-		  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
-		    ${sessionScope.message.messageContent}
-		  </div>
-		  <c:remove var="sessionScope.message" scope="session"/>
+	<div class="container my-5">
+		<h1 class="h1 d-inline">Albums</h1>
+		
+		<c:if test="${sessionScope.admin eq true}">
+			<a class="nav-link text-white float-right my-3" href='<c:url value="/admin/addAlbum"></c:url>' style="background-color: #1a7f42; display:inline-block;">Add new album</a>
 		</c:if>
 		
-	<c:forEach  var="album" items="${albums}" >
-		<div class="container d-inline-flex">
-			<div class="card" style="width: 18rem;">
-				  <img src="..." class="card-img-top" alt="...">
-				  <div class="card-body">
-				    <h5 class="card-title">Card title</h5>
-				    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-				    <a href="#" class="btn btn-success">Go somewhere</a>
-				  </div>
-			</div>
-		</div>
-	</c:forEach>
+		<hr/>
+		
+		<%@include file="./message.jsp" %>
 	
+		<div class="container my-3">
+	
+		  <div class="row">
+		    <c:forEach var="album" items="${albums}">
+		      <div class="col-lg-4 mb-4">
+		        <div class="card" style="height: 450px">
+		          <img alt="Image" src='<c:url value="/resources/images/${album.coverImage}"></c:url>' class="card-img-top" height="200px">
+		          <div class="card-body">
+		            <h5 class="card-title">${album.albumName}</h5>
+		            <p class="card-text" style="height: 70px;">${album.albumDescription}</p>
+		           
+		           	<c:choose>
+		           		<c:when test="${sessionScope.admin eq true}">
+			            	<a href='<c:url value="/admin/manageAlbumImages/${album.albumId}"></c:url>' class="btn btn-success">Open</a>
+				            <a href='<c:url value="/admin/deleteAlbum/${album.albumId}"></c:url>' class="btn btn-danger">Delete</a>
+		            	</c:when>
+			            <c:otherwise>
+				            <a href='<c:url value="viewAlbumImages/${album.albumId}"></c:url>' class="btn btn-success">Open</a>
+			            </c:otherwise>
+		            </c:choose>
+		            
+		            <p style="margin-top: 10px"><b>Valid till:</b> ${album.validityDate}</p>
+		          </div>
+		        </div>
+		      </div>
+		    </c:forEach>
+		  </div>
+		</div>
+	
+		
+	</div>
 
 </body>
 </html>

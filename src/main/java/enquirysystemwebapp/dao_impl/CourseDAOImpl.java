@@ -13,9 +13,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.eclipse.jdt.internal.compiler.ast.ReturnStatement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import enquirysystemwebapp.dao.CourseDAO;
@@ -70,7 +68,7 @@ public class CourseDAOImpl implements CourseDAO{
 			System.out.println(path);
 		
 		
-			String insertCourse="INSERT INTO COURSES(course_name,age_group,no_of_hrs,start_date,end_date,fees,about,course_img) VALUES(?,?,?,?,?,?,?,?)";
+			String insertCourse="INSERT INTO COURSES(course_name,age_group,no_of_hrs,start_date,end_date,fees,about,course_img,presentation_date) VALUES(?,?,?,?,?,?,?,?,?)";
 			
 			PreparedStatement pst=con.prepareStatement(insertCourse,PreparedStatement.RETURN_GENERATED_KEYS);
 			pst.setString(1, course.getCourseName());
@@ -81,6 +79,7 @@ public class CourseDAOImpl implements CourseDAO{
 			pst.setInt(6, course.getFees());
 			pst.setString(7, course.getAbout());
 			pst.setString(8, course.getImage());
+			pst.setString(9, course.getPresentationDate());
 			int affectedRows=pst.executeUpdate();
 			
 			if (affectedRows == 0) {
@@ -123,22 +122,125 @@ public class CourseDAOImpl implements CourseDAO{
 				course.setCourseName(rs.getString(2));
 				course.setAgeGroup(rs.getString(3));
 				course.setNoOfHrs(rs.getInt(4));
-				course.setStartDate(rs.getDate(5).toString());
-				course.setEndDate(rs.getDate(6).toString());
+				course.setStartDate(rs.getDate(5).toLocaleString().split(",")[0]);
+				course.setEndDate(rs.getDate(6).toLocaleString().split(",")[0]);
 				course.setFees(rs.getInt(7));
 				course.setAbout(rs.getString(8));
 				course.setImage(rs.getString(9));
+				course.setPresentationDate(rs.getString(10));
 				
 				list.add(course);	
+			}
+			
+			if(list.size()>0) {
+				return list;
 			}
 		}
 		catch(Exception ee) {
 			ee.printStackTrace();
 		}
-		return list;
+		return null;
 	}
 	
-	public void updateCourse(Course course,HttpSession session) {
+	public List<Course> getCurrentMonthCourses() {
+		// TODO Auto-generated method stub
+		List<Course> list=new ArrayList<Course>();
+		try {
+			Statement st=con.createStatement();
+			ResultSet rs=st.executeQuery("SELECT * FROM courses WHERE start_date <= curdate() AND end_date >= curdate() AND YEAR(start_date) = YEAR(CURDATE())");
+			
+			while(rs.next()) {
+				Course course=new Course();
+				course.setCourseId(rs.getInt(1));
+				course.setCourseName(rs.getString(2));
+				course.setAgeGroup(rs.getString(3));
+				course.setNoOfHrs(rs.getInt(4));
+				course.setStartDate(rs.getDate(5).toLocaleString().split(",")[0]);
+				course.setEndDate(rs.getDate(6).toLocaleString().split(",")[0]);
+				course.setFees(rs.getInt(7));
+				course.setAbout(rs.getString(8));
+				course.setImage(rs.getString(9));
+				course.setPresentationDate(rs.getString(10));
+				
+				list.add(course);	
+			}
+			
+			if(list.size()>0) {
+				return list;
+			}
+		}
+		catch(Exception ee) {
+			ee.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Course> getPastCourses() {
+		// TODO Auto-generated method stub
+		List<Course> list=new ArrayList<Course>();
+		try {
+			Statement st=con.createStatement();
+			ResultSet rs=st.executeQuery("select * from courses where end_date < curdate()");
+			
+			while(rs.next()) {
+				Course course=new Course();
+				course.setCourseId(rs.getInt(1));
+				course.setCourseName(rs.getString(2));
+				course.setAgeGroup(rs.getString(3));
+				course.setNoOfHrs(rs.getInt(4));
+				course.setStartDate(rs.getDate(5).toLocaleString().split(",")[0]);
+				course.setEndDate(rs.getDate(6).toLocaleString().split(",")[0]);
+				course.setFees(rs.getInt(7));
+				course.setAbout(rs.getString(8));
+				course.setImage(rs.getString(9));
+				course.setPresentationDate(rs.getString(10));
+				
+				list.add(course);	
+				
+			}
+			if(list.size()>0) {
+				return list;
+			}
+		}
+		catch(Exception ee) {
+			ee.printStackTrace();
+		}
+		return null;
+	}
+	
+	public List<Course> getUpcomingCourses() {
+		// TODO Auto-generated method stub
+		List<Course> list=new ArrayList<Course>();
+		try {
+			Statement st=con.createStatement();
+			ResultSet rs=st.executeQuery("select * from courses where start_date > curdate()");
+			
+			while(rs.next()) {
+				Course course=new Course();
+				course.setCourseId(rs.getInt(1));
+				course.setCourseName(rs.getString(2));
+				course.setAgeGroup(rs.getString(3));
+				course.setNoOfHrs(rs.getInt(4));
+				course.setStartDate(rs.getDate(5).toLocaleString().split(",")[0]);
+				course.setEndDate(rs.getDate(6).toLocaleString().split(",")[0]);
+				course.setFees(rs.getInt(7));
+				course.setAbout(rs.getString(8));
+				course.setImage(rs.getString(9));
+				course.setPresentationDate(rs.getString(10));
+				
+				list.add(course);	
+			}
+			if(list.size()>0) {
+				return list;
+			}
+		}
+		catch(Exception ee) {
+			ee.printStackTrace();
+		}
+		return null;
+	}
+	
+	public boolean updateCourse(Course course,HttpSession session) {
 		// TODO Auto-generated method stub
 		try {
 			MultipartFile file=course.getImageData();
@@ -151,7 +253,7 @@ public class CourseDAOImpl implements CourseDAO{
 			fos.close(); 
 			System.out.println(path);
 			
-			String updateCourseQuery="UPDATE COURSES SET course_name=?, age_group=? ,no_of_hrs=? ,start_date=? ,end_date=?,fees=?,about=?,course_img=? where course_id=?";
+			String updateCourseQuery="UPDATE COURSES SET course_name=?, age_group=? ,no_of_hrs=? ,start_date=? ,end_date=?,fees=?,about=?,course_img=?,presentation_date=? where course_id=?";
 			
 			PreparedStatement pst=con.prepareStatement(updateCourseQuery);
 			pst.setString(1, course.getCourseName());
@@ -162,12 +264,19 @@ public class CourseDAOImpl implements CourseDAO{
 			pst.setInt(6, course.getFees());
 			pst.setString(7, course.getAbout());
 			pst.setString(8, course.getImage());
-			pst.setInt(9, course.getCourseId());
-			pst.execute();
+			pst.setString(9, course.getPresentationDate());
+			pst.setInt(10, course.getCourseId());
+			
+			int affectedRows=pst.executeUpdate();
+			
+			if(affectedRows>0) {
+				return true;
+			}
 		}
 		catch(Exception ee) {
 			ee.printStackTrace();
 		}
+		return false;
 		
 	}
 
@@ -203,11 +312,12 @@ public class CourseDAOImpl implements CourseDAO{
 				course.setCourseName(rs.getString(2));
 				course.setAgeGroup(rs.getString(3));
 				course.setNoOfHrs(rs.getInt(4));
-				course.setStartDate(rs.getDate(5).toString());
-				course.setEndDate(rs.getDate(6).toString());
+				course.setStartDate(rs.getDate(5).toLocaleString().split(",")[0]);
+				course.setEndDate(rs.getDate(6).toLocaleString().split(",")[0]);
 				course.setFees(rs.getInt(7));
 				course.setAbout(rs.getString(8));
 				course.setImage(rs.getString(9));
+				course.setPresentationDate(rs.getDate(10).toLocaleString().split(",")[0]);
 				return course;
 			}
 			
@@ -255,6 +365,7 @@ public class CourseDAOImpl implements CourseDAO{
 				course.setFees(rs.getInt(7));
 				course.setAbout(rs.getString(8));
 				course.setImage(rs.getString(9));
+				course.setPresentationDate(rs.getDate(10).toLocaleString().split(",")[0]);
 				
 				list.add(course);	
 			}
@@ -345,6 +456,23 @@ public class CourseDAOImpl implements CourseDAO{
 		}
 		catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean deleteVideo(int linkId) {
+		try {
+			String query="delete from creative_corner where link_id=?";
+			PreparedStatement pst=con.prepareStatement(query);
+			pst.setInt(1, linkId);
+			int affectedRows=pst.executeUpdate();
+			
+			if(affectedRows>0) {
+				return true;
+			}
+		}
+		catch(Exception e) {
 			e.printStackTrace();
 		}
 		return false;

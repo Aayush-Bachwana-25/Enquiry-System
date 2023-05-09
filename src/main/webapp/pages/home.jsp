@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -29,18 +28,24 @@
 		  </div>
 	 </div>
 	 <hr/>
-	 <h1 class="h1 text-center mt-5">Offered Courses</h1>
+	 <h1 class="h1 text-center mt-5">${coursesType}</h1>
     	
     <div class="container mt-5" style="margin-bottom: 100px">
 
 		<table class="table border-bottom border-secondary">
 		  <thead class="thead-dark">
+		  	<c:if test="${title eq 'Homepage - Enquiry System'}">
+			  <tr style="text-align: center; background-color: grey; color: white;">
+			  	<td colspan="6" scope="row"><b>Schedule for ${month} - ${year}</b></td>
+			  </tr>
+		  	</c:if>
 		    <tr>
 		      <th scope="col">Course Name</th>
 		      <th scope="col">Age Group</th>
 		      <th scope="col">No. of hrs</th>
+		      <th scope="col">Start Date</th>
+		      <th scope="col">End Date</th>
 		      <th scope="col">Fees</th>
-		      <th scope="col" style="text-align:center;">Action</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -49,14 +54,17 @@
 			      <td scope="row"><a href='viewCourse/${course.courseId}'>${course.courseName}</a></td>
 			      <td>${course.ageGroup}</td>
 			      <td>${course.noOfHrs}</td>
+			      <td>${course.startDate}</td>
+			      <td>${course.endDate}</td>
 			      <td><b>&#x20B9;</b>&nbsp;${course.fees}</td>
-			      <td scope="row" style="text-align:center;"><a href="#" style="color: #1E3050;"><i class="fa-sharp fa-solid fa-envelope fa-lg"></i></a>
-			      
-			      </td>
 			    </tr>
 			    </c:forEach>
 		   </tbody>
 		</table>
+		
+		
+		<%@include file="./message.jsp" %>
+	
     
     </div>
     

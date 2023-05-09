@@ -53,13 +53,16 @@ public class EnquiryDAOImpl implements EnquiryDAO{
 			pst.setString(3, query.getEmail());
 			pst.setString(4, query.getMobile());
 			pst.setString(5, query.getQuery());
-			pst.execute();
-			return true;
+			int affectedRows=pst.executeUpdate();
+			if(affectedRows>0) {
+				return true;
+			}
 		}
 		catch(Exception ee) {
 			ee.printStackTrace();
-			return false;
+			
 		}
+		return false;
 	}
 
 	public boolean deleteQuery(int id) {
@@ -155,6 +158,10 @@ public class EnquiryDAOImpl implements EnquiryDAO{
 				query.setEnquiry_date(rs.getString(7));
 				query.setFollow_date(rs.getString(8));
 				queries.add(query);		
+			}
+			
+			if(queries.size()==0) {
+				return null;
 			}
 		}
 		catch(Exception ee) {

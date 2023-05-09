@@ -14,6 +14,7 @@ public class Course {
 	private int fees;
 	private String about;
 	private String image;
+	private String presentationDate;
 	
 	private MultipartFile imageData;
 	
@@ -135,6 +136,20 @@ public class Course {
 
 	public void setImageData(MultipartFile imageData) {
 		this.imageData = imageData;
+	}
+	
+	
+
+
+
+	public String getPresentationDate() {
+		return presentationDate;
+	}
+
+
+
+	public void setPresentationDate(String presentationDate) {
+		this.presentationDate = presentationDate;
 	}
 
 

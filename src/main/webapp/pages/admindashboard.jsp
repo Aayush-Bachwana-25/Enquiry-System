@@ -12,16 +12,26 @@
 <meta charset="ISO-8859-1">
 <%@include file="./base.jsp" %>
 
+	<style>
+		body{
+			background-color: #f2f2f2;
+		}
+		.card{
+			border: 1px solid grey;
+			border-radius:5px;
+		}
+	</style>
+
 </head>
 <body>
 	<%@include file="./navbar.jsp" %>
 	
-	<h1 class="h1 text-center mb-5">Welcome,Admin</h1>
+	<h1 class="h1 text-center my-5">Welcome back, Admin!</h1>
 	
-	<div class="container d-flex align-items-center justify-content-center">
+	<div class="container d-flex justify-content-center">
 
 		<div class="card mx-3" style="width: 18rem;">
-			  <img class="card-img-top" src='<c:url value="/resources/images/courses.png"></c:url>' alt="Card image cap">
+			  <img class="card-img-top" src='<c:url value="/resources/images/books.jpg"></c:url>' alt="Card image cap"  height="220px">
 			  
 			  <div class="card-body">
 			    <h5 class="card-title">Courses</h5>
@@ -29,19 +39,19 @@
 			  
 			  <ul class="list-group list-group-flush">
 			    <li class="list-group-item">
-			    	<a href="addcourse" class="card-link">Add Courses</a>
+			    	<a href='<c:url value="/admin/addcourse"></c:url>' class="card-link">Add Courses</a>
 		    	</li>
 			    <li class="list-group-item">
-			    	<a href="managecourses" class="card-link">Manage Courses</a>
+			    	<a href='<c:url value="/admin/managecourses"></c:url>' class="card-link">Manage Courses</a>
 		    	</li>
 		    	<li class="list-group-item">
-			    	<a href="managebatches" class="card-link">Manage Batches</a>
+			    	<a href='<c:url value="/admin/managebatches"></c:url>' class="card-link">Manage Batches</a>
 		    	</li>
 			  </ul>
 		</div>
 		
 		<div class="card mx-3" style="width: 18rem;">
-			  <img class="card-img-top" src='<c:url value="/resources/images/courses.png"></c:url>' alt="Card image cap">
+			  <img class="card-img-top" src='<c:url value="/resources/images/question.jpg"></c:url>' alt="Card image cap" height=220px>
 			  
 			  <div class="card-body">
 			    <h5 class="card-title">Actions</h5>
@@ -49,19 +59,19 @@
 			  
 			  <ul class="list-group list-group-flush">
 			    <li class="list-group-item">
-			    	<a href="viewqueries" class="card-link">View/Manage Queries</a>
+			    	<a href='<c:url value="/admin/viewqueries"></c:url>' class="card-link">View/Manage Queries</a>
 		    	</li>
 			    <li class="list-group-item">
-			    	<a href="addStudent" class="card-link">Register Student</a>
+			    	<a href='<c:url value="/admin/addStudent"></c:url>' class="card-link">Student Registration</a>
 		    	</li>
 		    	<li class="list-group-item">
-			    	<a href="#" class="card-link">Annexure-I</a>
+			    	<a href='<c:url value="/resources/misc/annexure1.pdf"></c:url>' class="card-link">Annexure-I</a>
 		    	</li>
 			  </ul>
 		</div>
 		
-		<div class="card mx-3" style="width: 18rem;">
-			  <img class="card-img-top" src='<c:url value="/resources/images/courses.png"></c:url>' alt="Card image cap">
+		<div class="card mx-3" style="width: 18rem; ">
+			  <img class="card-img-top" src='<c:url value="/resources/images/camera.jpg"></c:url>' alt="Card image cap" height="220px">
 			  
 			  <div class="card-body">
 			    <h5 class="card-title">Gallery</h5>
@@ -69,37 +79,17 @@
 			  
 			  <ul class="list-group list-group-flush">
 			    <li class="list-group-item">
-			    	<a href="manageAlbums" class="card-link">Manage Albums</a>
+			    	<a href='<c:url value="/admin/manageAlbums"></c:url>' class="card-link">Albums</a>
 		    	</li>
 			    <li class="list-group-item">
-			    	<a href="creative-corner" class="card-link">Creative Corner</a>
+			    	<a href='<c:url value="/admin/creative-corner"></c:url>' class="card-link">Creative Corner</a>
 		    	</li>
 		    	<li class="list-group-item">
-			    	<a href="#" class="card-link">Courses Thumbnails</a>
+			    	&nbsp;
 		    	</li>
 			  </ul>
 		</div>
 	</div>
-	<!-- 
-	<div class="card">
-		  <h2 class="card-header">QUERIES</h2>
-		  <hr/>
-		  <ul class="card-links">
-		    <li><a href="addcourse">Manage Queries</a></li>
-		    <li><a href="managecourses">Manage Courses</a></li>
-		    <li><a href="managebatches">Manage Batches</a></li>
-		  </ul>
-	</div>
-	
-	<div class="card">
-		  <h2 class="card-header">GALLERY</h2>
-		  <hr/>
-		  <ul class="card-links">
-		    <li><a href="#">Add album</a></li>
-		    <li><a href="#">Manage existing albums</a></li>
-		    <li><a href="#">Manage Batches</a></li>
-		  </ul>
-	</div> -->
 	
 </body>
 </html>

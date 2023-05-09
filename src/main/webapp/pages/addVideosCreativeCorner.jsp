@@ -15,19 +15,15 @@
 	<div class="container">
 		<h1 class="h1">Add videos</h1>
 		
-		<!-- 	error msg -->
-		<c:if test="${not empty sessionScope.message}">
-		  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
-		    ${sessionScope.message.messageContent}
-		  </div>
-		  <c:remove var="message" scope="session"/>
-		</c:if>
+		
+		<%@include file="./message.jsp" %>
+	
 		
 		<form:form method="post" modelAttribute="link">
 			<div class="form-group row">
 				    <label for="courseId" class="col-sm-2 col-form-label"><b>Course Name</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      		<form:select path="courseId" class="form-control">
+				      		<form:select path="courseId" class="form-control" required="true">
 						        <form:option value="0">Select Course</form:option>
 						        <c:forEach items="${courses}" var="course">
 						            <form:option value="${course.courseId}">${course.courseName}</form:option>
@@ -39,13 +35,13 @@
 			   <div class="form-group row">
 				    <label for="url" class="col-sm-2 col-form-label"><b>Youtube Link</b><span style="color:red"> *</span></label>
 				    <div class="col-sm-10">
-				      <form:input path="url" id="url" class="form-control" placeholder="Enter URL here"/>
+				      <form:input path="url" id="url" class="form-control" placeholder="Enter URL here"  required="true"/>
 				    </div>
 			   </div>
 			   
 			    <div style="text-align: center;">
 				 	  <form:button type="submit" class="btn btn-primary">Add Video</form:button>
-				 	  <a href="admindashboard" class="btn btn-secondary ml-1" role="button" aria-disabled="true">Cancel</a>
+				 	  <a href='<c:url value="/admindashboard"></c:url>' class="btn btn-secondary ml-1" role="button" aria-disabled="true">Cancel</a>
 			 	</div>
 			
 		</form:form>

@@ -11,7 +11,7 @@
     <c:set var="url" value="${pageContext.request.requestURL}" scope="request"/>
 
     
-    <div class="container">
+    <div class="container my-5">
     	
     	<c:if test="${not empty sessionScope.message}">
 			  <div class="alert alert-${sessionScope.message.type} container text-center" role="alert">
@@ -19,8 +19,8 @@
 			  </div>
 			  <c:remove var="message" scope="session"/>
 		</c:if>
-
-		<table class="table">
+		<h1 class="h1 text-center">Manage Courses</h1><hr/>
+		<table class="table mt-2">
 		  <thead class="thead-dark">
 		    <tr>
 		      <th scope="col">Course Name</th>

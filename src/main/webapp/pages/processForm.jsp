@@ -51,7 +51,7 @@
 					      <label class="form-check-label" for="invalidCheck">
 						        I hereby apply for admission to the above-mentioned course; 
 						        Paying by 
-						        <select name="paymentMode" id="paymentMode">
+						        <select name="mode" id="mode"  required="true">
 							        <option value="">Mode of Payment</option>
 							        <option value="Cash">Cash</option>
 							        <option value="Cheque">Cheque</option>
@@ -71,10 +71,14 @@
 					      </div>
 					    </div>
 					  </div>
+					  
+					  <form:input type="hidden" path="studentId" id="studentId" value="${student.studentId}"/>
+					  <form:input type="hidden" path="courseId" id="courseId" value="${course.courseId}"/>
+						      
 				 	  
 				 	 <div style="text-align: center;">
 					 	  <form:button type="submit" class="btn btn-primary">Register</form:button>
-					 	  <a href="admindashboard" class="btn btn-secondary ml-1" role="button" aria-disabled="true">Back</a>
+					 	  <a href='<c:url value="/admindashboard"></c:url>' class="btn btn-secondary ml-1" role="button" aria-disabled="true">Back</a>
 				 	  </div> 
 	
 		</form:form>

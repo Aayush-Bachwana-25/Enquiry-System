@@ -134,6 +134,13 @@ public class Student {
 	public void setBatchId(int batchId) {
 		this.batchId = batchId;
 	}
+	@Override
+	public String toString() {
+		return "Student [studentId=" + studentId + ", studentName=" + studentName + ", fatherName=" + fatherName
+				+ ", profilePhoto=" + profilePhoto + ", signature=" + signature + "]";
+	}
+	
+	
 	
 	
 }

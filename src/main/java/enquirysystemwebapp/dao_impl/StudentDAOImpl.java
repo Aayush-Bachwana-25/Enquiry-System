@@ -203,7 +203,7 @@ public class StudentDAOImpl implements StudentDAO {
 	
 	public int addTransaction(Transaction transaction) {
 		try {
-			String query="insert into student_transactions(studentId,courseId,chequeNo,bankName) values(?,?,?,?)";
+			String query="insert into student_transactions(studentId,courseId,chequeNo,bankName,mode) values(?,?,?,?,?)";
 			PreparedStatement pst=con.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			
@@ -211,7 +211,7 @@ public class StudentDAOImpl implements StudentDAO {
 			pst.setInt(2, transaction.getCourseId());
 			pst.setString(3, transaction.getChequeNo());
 			pst.setString(4, transaction.getBankName());
-			
+			pst.setString(5, transaction.getMode());
 			int affectedRows=pst.executeUpdate();
 			
 			if(affectedRows>0) {
@@ -238,12 +238,14 @@ public class StudentDAOImpl implements StudentDAO {
 			
 			while(rs.next()) {
 				Transaction transaction=new Transaction();
-				transaction.setTransactionId(6);
+				
 				transaction.setStudentId(rs.getInt(1));
 				transaction.setCourseId(rs.getInt(2));
 				transaction.setChequeNo(rs.getString(3));
 				transaction.setBankName(rs.getString(4));
 				transaction.setTransactionDate(rs.getString(5));
+				transaction.setTransactionId(6);
+				transaction.setMode(rs.getString(7));
 				return transaction;
 			}			
 		}

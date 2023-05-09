@@ -10,7 +10,7 @@
 	  <div class="collapse navbar-collapse" id="navbarNavDropdown">
 		  <ul class="navbar-nav ml-auto">
 		    <li class="nav-item active">
-		      <a class="nav-link" href='<c:url value="/home"></c:url>'>Home <span class="sr-only">(current)</span></a>
+		      <a class="nav-link" href='<c:url value="/"></c:url>'>Home <span class="sr-only">(current)</span></a>
 		    </li>
 		    
 		    <li class="nav-item ml-2">
@@ -22,9 +22,9 @@
 		        Courses
 		      </a>
 		      <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-		        <a class="dropdown-item" href="#">Action</a>
-		        <a class="dropdown-item" href="#">Another action</a>
-		        <a class="dropdown-item" href="#">Something else here</a>
+		        <a class="dropdown-item" href='<c:url value="/getPastCourses"></c:url>'>Past Courses</a>
+		        <a class="dropdown-item" href='<c:url value="/getUpcomingCourses"></c:url>'>Upcoming Courses</a>
+		        <a class="dropdown-item" href='<c:url value="/getAllCourses"></c:url>'>All courses</a>
 		      </div>
 		    </li>
 		    
@@ -33,13 +33,25 @@
 		    </li>
 		    
 		    <li class="nav-item ml-2">
-		      <a class="nav-link" href="#">Gallery</a>
+		      <a class="nav-link" href='<c:url value="/viewGallery"></c:url>'>Gallery</a>
 		    </li>
 		    
-		    <li class="nav-item ml-2">
-		      <a class="nav-link text-white" href='<c:url value="/adminlogin"></c:url>' style="background-color: #1a7f42;">Admin Panel</a>
-		    </li>
-		    
+		    <c:choose>
+			    <c:when test="${sessionScope.admin eq true }">
+			    	<li class="nav-item ml-2">
+			      		<a class="nav-link text-white" href='<c:url value="/admindashboard"></c:url>' style="background-color: #1a7f42; margin-left: 30px;">Dashboard</a>
+			    	</li>
+			    	
+			    	<li class="nav-item ml-2">
+			      		<a class="nav-link text-white" href='<c:url value="/adminlogin"></c:url>' style="background-color: #cc0000;">Logout</a>
+			    	</li>
+			    </c:when>
+			    <c:otherwise>
+			    <li class="nav-item ml-2">
+			      <a class="nav-link text-white" href='<c:url value="/adminlogin"></c:url>' style="background-color: #1a7f42;">Admin Panel</a>
+			    </li>
+			    </c:otherwise>
+		    </c:choose>
 		  </ul>
 		</div>
 

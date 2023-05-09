@@ -4,6 +4,8 @@ public class Album {
 	int albumId;
 	String albumName;
 	String albumDescription;
+	String coverImage;
+	String validityDate;
 	
 	
 	public Album() {
@@ -37,6 +39,19 @@ public class Album {
 	public void setAlbumDescription(String albumDescription) {
 		this.albumDescription = albumDescription;
 	}
+	public String getCoverImage() {
+		return coverImage;
+	}
+	public void setCoverImage(String coverImage) {
+		this.coverImage = coverImage;
+	}
+	public String getValidityDate() {
+		return validityDate;
+	}
+	public void setValidityDate(String validityDate) {
+		this.validityDate = validityDate;
+	}
+	
 	
 	
 }

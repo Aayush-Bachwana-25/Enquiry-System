@@ -48,39 +48,16 @@ public class AdminController {
 	@Autowired
 	GalleryDAO galleryDao;
 	
-	@GetMapping("/addcourse")
+	@GetMapping("/admin/addcourse")
 	public ModelAndView addNewCourse(){
 		Course course=new Course();
 		return new ModelAndView("addcourse","nc",course);
 	}
-	
-//	@PostMapping("/addcourse")
-//	public ModelAndView postaddNewCourse(@ModelAttribute("nc") Course course,HttpSession session){
-//		
-//		ModelAndView model=new ModelAndView();
-//		
-//		String msg;
-//		
-//		if(courseDao.addCourse(course,session)) {
-//			msg="Upload Successful!";
-//			model.setViewName("addBatch");
-//			model.addObject("ns", new Batch());
-//			model.addObject("filename",course.getImageData().getOriginalFilename());
-//			session.setAttribute("message", new Message("Course added successfully!", "success"));
-//		}
-//		else {
-//			model.setViewName("admindashboard");
-//			msg="Upload error";
-//			session.setAttribute("message", new Message("Something went wrong,Try again!", "danger"));
-//		}
-//		model.addObject("msg", msg);
-//		return model;
-//	}
-	
-	@PostMapping("/addcourse")
-	public RedirectView postaddNewCourse(@ModelAttribute("nc") Course course,
-			HttpSession session,
-			HttpServletRequest request){	
+
+	@PostMapping("/admin/addcourse")
+	public String postaddNewCourse(@ModelAttribute("nc") Course course,
+			HttpSession session
+			){	
 		
 		Message message;
 		int courseId=courseDao.addCourse(course,session) ;
@@ -94,13 +71,10 @@ public class AdminController {
 		}
 		session.setAttribute("message",message);
 		
-		RedirectView redirectView=new RedirectView();
-	
-		redirectView.setUrl(request.getContextPath()+"/addBatch/"+course.getCourseId()+"/"+course.getCourseName());
-		return redirectView;
+		return "redirect:/admin/addBatch/"+course.getCourseId()+"/"+course.getCourseName();
 	}
 	
-	@GetMapping("/managecourses")
+	@GetMapping("/admin/managecourses")
 	public ModelAndView manageCourses() {
 		ModelAndView model=new ModelAndView();
 		model.setViewName("manageCourses");
@@ -109,15 +83,13 @@ public class AdminController {
 		return model;
 	}
 	
-	@GetMapping("/delete/{courseId}")
-	public RedirectView deleteCourse(@PathVariable("courseId") int courseId,HttpServletRequest request) {
+	@GetMapping("/admin/delete/{courseId}")
+	public String deleteCourse(@PathVariable("courseId") int courseId) {
 		courseDao.deleteCourse(courseId);
-		RedirectView redirectView=new RedirectView();
-		redirectView.setUrl(request.getContextPath()+"/managecourses");
-		return redirectView;
+		return "redirect:/admin/managecourses";
 	}
 	
-	@GetMapping("/editCourse/{courseId}")
+	@GetMapping("/admin/editCourse/{courseId}")
 	public ModelAndView editCourse(@PathVariable("courseId") int courseId) {
 		ModelAndView model=new ModelAndView();
 		model.setViewName("modifyCourse");
@@ -126,16 +98,28 @@ public class AdminController {
 		return model;	
 	}
 	
-	@PostMapping("/editCourse/{courseId}")
-	public RedirectView editCourse(@ModelAttribute Course course,HttpSession session,HttpServletRequest request) {
-		courseDao.updateCourse(course, session);
-		RedirectView redirectView=new RedirectView();
-		redirectView.setUrl(request.getContextPath()+"/managecourses");
-		return redirectView;
+	@PostMapping("/admin/editCourse/{courseId}")
+	public String editCourse(
+			@ModelAttribute Course course,
+			HttpSession session
+			) {
+		Message message;
+		if(courseDao.updateCourse(course, session)) {
+			message=new Message("Course updated successfully!", "success");
+		}
+		else {
+			message=new Message("Couldn't update course, Try later!", "danger");
+		}
+		session.setAttribute("message", message);
+		return "redirect:/admin/managecourses";
 	}
 	
-	@GetMapping("/addBatch/{courseId}/{courseName}")
-	public ModelAndView addBatchForCourse(@PathVariable("courseId") int courseId,@PathVariable("courseName") String courseName,HttpServletRequest request) {
+	@GetMapping("/admin/addBatch/{courseId}/{courseName}")
+	public ModelAndView addBatchForCourse(
+			@PathVariable("courseId") int courseId,
+			@PathVariable("courseName") String courseName,
+			HttpServletRequest request
+			) {
 		Batch batch=new Batch(courseId);
 		ModelAndView model=new ModelAndView();
 		model.setViewName("/addBatch");
@@ -144,12 +128,12 @@ public class AdminController {
 		return model;
 	}
 	
-	@PostMapping("/addBatch/{courseId}/{courseName}")
-    public RedirectView addBatchForCourse(@ModelAttribute("ns") Batch batch,
+	@PostMapping("/admin/addBatch/{courseId}/{courseName}")
+    public String addBatchForCourse(@ModelAttribute("ns") Batch batch,
     		@PathVariable("courseId") int courseId,
     		@PathVariable("courseName") String courseName,
-    		HttpSession session,
-    		HttpServletRequest request) {
+    		HttpSession session
+    		) {
 		
 		Message message;
 		System.out.println(batch);
@@ -161,17 +145,10 @@ public class AdminController {
     		message=new Message("Something went wrong,Try again!", "danger");
     	}
     	session.setAttribute("message",message);
-    	System.out.println(message);
-    	
-    	RedirectView redirectView=new RedirectView();
-//    	redirectView.setUrl(request.getContextPath()+"/addBatch/"+courseId+"/"+courseName);
-    	redirectView.setUrl(request.getContextPath()+"/managebatches");
-		return redirectView;
-		
-    	
+    	return "redirect:/admin/managebatches";
     }
 	
-	@GetMapping("/managebatches")
+	@GetMapping("/admin/managebatches")
 	public ModelAndView showCoursesForManagingBatches() {
 		ModelAndView model=new ModelAndView();
 		model.setViewName("manageBatches");
@@ -181,9 +158,10 @@ public class AdminController {
 		return model;
 	}
 	
-	@GetMapping("/manageBatchByCourse/{courseId}/")
-	public ModelAndView manageBatchByCourse(@PathVariable("courseId") int courseId,
-			HttpServletRequest request) {
+	@GetMapping("/admin/manageBatchByCourse/{courseId}/")
+	public ModelAndView manageBatchByCourse(
+			@PathVariable("courseId") int courseId
+			) {
 		List<Batch> batches=batchDao.getBatchesByCourseId(courseId);
 		Course course=courseDao.getCourseById(courseId);
 		ModelAndView model=new ModelAndView();
@@ -194,11 +172,11 @@ public class AdminController {
 		return model;
 	}
 	
-	@GetMapping("/manageBatchByCourse/{courseId}/deleteBatch/{id}")
-	public RedirectView deleteBatchForCourse(@PathVariable("id") int batchId,
+	@GetMapping("/admin/manageBatchByCourse/{courseId}/deleteBatch/{id}")
+	public String deleteBatchForCourse(@PathVariable("id") int batchId,
 			@PathVariable("courseId") int courseId,
-			HttpServletRequest request,
-			HttpSession session) {
+			HttpSession session
+			) {
 		Message message;
 		if(batchDao.deleteBatch(batchId)) {
 			System.out.println("Batch deleted");
@@ -208,15 +186,12 @@ public class AdminController {
 			message=new Message("Something went wrong,Try again!", "danger");
 		}
 		session.setAttribute("message",message);
-		RedirectView redirectView=new RedirectView();
-		redirectView.setUrl(request.getContextPath()+"/manageBatchByCourse/"+courseId+"/");
-		return redirectView;
+		return "redirect:/admin/manageBatchByCourse/"+courseId+"/";
 	}
 	
-	@GetMapping("/manageBatchByCourse/{courseId}/editBatch/{id}")
+	@GetMapping("/admin/manageBatchByCourse/{courseId}/editBatch/{id}")
 	public ModelAndView editBatchForCourse(@PathVariable("id") int batchId,
 			@PathVariable("courseId") int courseId,
-			HttpServletRequest request,
 			HttpSession session) {
 
 		ModelAndView model=new ModelAndView();
@@ -226,18 +201,16 @@ public class AdminController {
 			model.setViewName("editBatch");
 			model.addObject("batch",batch);		}
 		else {
-			model.setViewName(request.getContextPath()+"/manageBatchByCourse/"+courseId+"/");
+			model.setViewName("redirect:/admin/manageBatchByCourse/"+courseId+"/");
 		}
 		return model;
 	}
 	
-	@PostMapping("/manageBatchByCourse/{courseId}/editBatch/{id}")
-	public RedirectView editBatchForCourse(@ModelAttribute("batch") Batch batch,
-			HttpServletRequest request,
+	@PostMapping("/admin/manageBatchByCourse/{courseId}/editBatch/{id}")
+	public String editBatchForCourse(@ModelAttribute("batch") Batch batch,
 			HttpSession session) {
 		Message message;
 		
-		RedirectView redirectView=new RedirectView();
 		if(batchDao.updateBatch(batch)) {
 			message=new Message("Batch updated succesfully!", "success");
 		}
@@ -245,23 +218,29 @@ public class AdminController {
 			message=new Message("Something went wrong!", "danger");
 		}
 		session.setAttribute("message", message);
-		redirectView.setUrl(request.getContextPath()+"/manageBatchByCourse/"+batch.getCourseId()+"/");
-		return redirectView;
+		return "redirect:/admin/manageBatchByCourse/"+batch.getCourseId()+"/";
 		
 	}
 	
-	@GetMapping("/viewqueries")
-	public ModelAndView viewAndManageQueries() {
+	@GetMapping("/admin/viewqueries")
+	public ModelAndView viewAndManageQueries(
+			HttpSession session
+			) {
 		ModelAndView model=new ModelAndView();
 		model.setViewName("viewQueries");
 		
 		List<Query> enquiries=enquiryDao.getAllQueriesForToday();
-		model.addObject("enquiries",enquiries);
-		model.addObject("title","Today's Queries");
+		if(enquiries==null) {
+			session.setAttribute("message",new Message("No queries for today!", "secondary"));
+		}
+		else {
+			model.addObject("enquiries",enquiries);
+			model.addObject("title","Today's Queries");
+		}
 		return model;
 	}
 	
-	@GetMapping("/followUpUser/{id}")
+	@GetMapping("/admin/followUpUser/{id}")
 	public ModelAndView viewUserProfile(@PathVariable("id") int enquiryId) {
 		ModelAndView model=new ModelAndView();
 		model.setViewName("followUser");
@@ -275,7 +254,7 @@ public class AdminController {
 		return model;
 	}
 	
-	@PostMapping("/followUpUser/saveFollowUp")
+	@PostMapping("/admin/followUpUser/saveFollowUp")
 	public RedirectView saveFollowUp(@RequestParam("followDate") String updatedFollowDate,
 			@RequestParam("feedback") String feedback,
 			HttpServletRequest request,
@@ -285,15 +264,6 @@ public class AdminController {
 		Message message;
 		
 		int enquiryId=(Integer)session.getAttribute("enquiryId");
-		
-		
-		//********************************
-		//Check details
-		System.out.println(updatedFollowDate);
-		System.out.println(feedback);
-		System.out.println(enquiryId);
-		//******************************
-				
 		
 		boolean action1=enquiryDao.updateFollowDate(enquiryId, updatedFollowDate);
 		boolean action2=enquiryDao.addFeedbackForQuery(new Feedback(enquiryId,feedback));
@@ -311,13 +281,13 @@ public class AdminController {
 		session.setAttribute("message", message);
 		
 		RedirectView redirectView=new RedirectView();
-		redirectView.setUrl(request.getContextPath()+"/followUpUser/"+enquiryId);
+		redirectView.setUrl(request.getContextPath()+"/admin/followUpUser/"+enquiryId);
 		session.removeAttribute("enquiryId");
 		return redirectView;
 	}
 	
 	
-	@GetMapping("/addStudent")
+	@GetMapping("/admin/addStudent")
 	public ModelAndView addStudent(
 			HttpSession session
 			) {
@@ -341,36 +311,34 @@ public class AdminController {
 		return model;
 	}
 	
-	@PostMapping("/addStudent")
-	public RedirectView addStudent(@ModelAttribute("student") Student student,
+	@PostMapping("/admin/addStudent")
+	public String addStudent(@ModelAttribute("student") Student student,
 			@RequestParam("profile") MultipartFile profilePhoto,
 			@RequestParam("sign") MultipartFile signature,
 			@RequestParam("courseId") int courseId,
-			HttpServletRequest request,
 			HttpSession session) {
 		
-		RedirectView redirectView=new RedirectView();
 		Message message;
+		String url;
 
 		int studentId=studentDao.addStudent(student,profilePhoto,signature,session);
 		if(studentId==-1) {
-			redirectView.setUrl(request.getContextPath()+"/addStudent");
+			url="redirect:/admin/addStudent";
 			message=new Message("Something went wrong", "danger");
 			System.out.println("Registration failed!");
 		}
 		else{
 			session.setAttribute("courseId", courseId);
-			redirectView.setUrl(request.getContextPath()+"/addStudent/"+studentId);
+			url="redirect:/admin/addStudent/"+studentId;
 			message=new Message("Registration successful", "success");
 			System.out.println("Student registered!");
 		}
 		session.setAttribute("message", message);
-		return redirectView;
+		return url;
 	}
 	
-	@GetMapping("/addStudent/{studentId}")
+	@GetMapping("/admin/addStudent/{studentId}")
 	public ModelAndView addStudent(@PathVariable("studentId") int studentId,
-			HttpServletRequest request,
 			HttpSession session) {
 		ModelAndView model=new ModelAndView();
 
@@ -387,7 +355,7 @@ public class AdminController {
 		return model;
 	}
 	
-	@PostMapping("/addStudent/{studentId}")
+	@PostMapping("/admin/addStudent/{studentId}")
 	public ModelAndView addStudent(
 			@ModelAttribute("transactionDetail") Transaction transaction,
 			@PathVariable("studentId") int studentId,
@@ -401,26 +369,28 @@ public class AdminController {
 		
 		if(transactionId==-1) {
 			message=new Message("Transaction failed", "danger");
+			session.setAttribute("message", message);
+			studentDao.deleteStudent(studentId);
 			System.out.println("Transaction failed!");
 			modelAndView.setViewName("admindashboard");
 		}
 		else {
-			message=new Message("Transaction successful", "success");
-			System.out.println("Transaction success!");
-			modelAndView.addObject("student",studentDao.getStudentById(studentId));
+			transaction.setTransactionId(transactionId);
+			modelAndView.addObject("student",studentDao.getStudentById(transaction.getStudentId()));
+			modelAndView.addObject("course", courseDao.getCourseById(transaction.getCourseId()));
 			modelAndView.addObject("transaction",transaction);
-			modelAndView.setViewName("viewReciept");
+			modelAndView.setViewName("printreciept");
 		}
-		session.setAttribute("message", message);
+		
 		return modelAndView;
 	}
 	
-	@GetMapping("/followUpUser/addStudent")
+	@GetMapping("/admin/followUpUser/addStudent")
 	public String addStudentFromFollowUp() {
-		return "redirect:/addStudent";
+		return "redirect:/admin/addStudent";
 	}
 	
-	@GetMapping("/creative-corner")
+	@GetMapping("/admin/creative-corner")
 	public ModelAndView manageCreativeCorner() {
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("manageCreativeCorner");
@@ -429,7 +399,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/addvideos")
+	@GetMapping("/admin/addvideos")
 	public ModelAndView addVideoByCourse() {
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("addVideosCreativeCorner");
@@ -438,7 +408,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
-	@PostMapping("/addvideos")
+	@PostMapping("/admin/addvideos")
 	public String addVideoByCourse(
 			@ModelAttribute("link") CreativeCornerModel model,
 			HttpSession session
@@ -452,16 +422,34 @@ public class AdminController {
 			}
 			session.setAttribute("message", message);
 			
-			return "redirect:/addvideos";
+			return "redirect:/admin/addvideos";
 			
 	}
 	
-	@GetMapping("/manageAlbums")
+	@GetMapping("/admin/deleteVideo/{linkId}")
+	public String deleteVideoForCreativeCorner(
+			@PathVariable("linkId") int linkId,
+			HttpSession session
+			) {
+			Message message;
+			if(courseDao.deleteVideo(linkId)) {
+				message=new Message("Video removed!", "success");
+			}
+			else {
+				message=new Message("Couldn't delete video, Try later!", "danger");
+			}
+			session.setAttribute("message", message);
+			return "redirect:/admin/creative-corner";
+	}
+	
+	
+
+	@GetMapping("/admin/manageAlbums")
 	public ModelAndView manageAlbums(
 			HttpSession session
 			) {
 		ModelAndView modelAndView=new ModelAndView();
-		modelAndView.setViewName("viewAndManageAlbums");
+		modelAndView.setViewName("gallery");
 		List<Album> albums=galleryDao.getAllAlbums();
 		if(albums!=null) {
 			modelAndView.addObject("albums",albums);
@@ -473,7 +461,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
-	@GetMapping("/addAlbum")
+	@GetMapping("/admin/addAlbum")
 	public ModelAndView addAlbum() {
 		ModelAndView modelAndView=new ModelAndView();
 		modelAndView.setViewName("addAlbum");
@@ -481,7 +469,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
-	@PostMapping("/addAlbum")
+	@PostMapping("/admin/addAlbum")
 	public String addAlbum(
 			@ModelAttribute("album") Album album,
 			HttpSession session
@@ -494,10 +482,10 @@ public class AdminController {
 			message=new Message("Couldn't add album! Try later", "danger");
 		}
 		session.setAttribute("message", message);
-		return "redirect:/manageAlbums";
+		return "redirect:/admin/manageAlbums";
 	}
 	
-	@GetMapping("/deleteAlbum/{albumId}")
+	@GetMapping("/admin/deleteAlbum/{albumId}")
 	public String deleteAlbum(
 				@PathVariable("albumId") int albumId,
 				HttpSession session
@@ -510,17 +498,18 @@ public class AdminController {
 			message=new Message("Couldn't delete album! Try later", "danger");
 		}
 		session.setAttribute("message", message);
-		return "redirect:/manageAlbums";
+		return "redirect:/admin/manageAlbums";
 	}
 	
-	@GetMapping("/manageAlbumImages/{albumId}")
+	@GetMapping("/admin/manageAlbumImages/{albumId}")
 	public ModelAndView viewAndManageAlbumImages(
 			@PathVariable("albumId") int albumId,
 			HttpSession session
 			) {
 		
 		ModelAndView modelAndView=new ModelAndView();
-		modelAndView.setViewName("manageAlbum");
+		modelAndView.setViewName("album");
+		modelAndView.addObject("album",galleryDao.getAlbumById(albumId));
 		
 		List<String> images=galleryDao.getImagesByAlbum(albumId);
 		if(images==null) {
@@ -530,13 +519,12 @@ public class AdminController {
 		}
 		else {
 			modelAndView.addObject("images",images);
-			modelAndView.addObject("albumId",albumId);
 		}
 		return modelAndView;
 		
 	}
 	
-	@GetMapping("/addImageToAlbum/{albumId}")
+	@GetMapping("/admin/addImageToAlbum/{albumId}")
 	public ModelAndView addImageToAlbum(
 			@PathVariable("albumId") int albumId,
 			HttpSession session
@@ -557,7 +545,7 @@ public class AdminController {
 		return modelAndView;
 	}
 	
-	@PostMapping("/addImageToAlbum/{albumId}")
+	@PostMapping("/admin/addImageToAlbum/{albumId}")
 	public String addImageToAlbum(
 			@PathVariable("albumId") int albumId,
 			@RequestParam("imageData") MultipartFile image,
@@ -571,7 +559,49 @@ public class AdminController {
 			message=new Message("Something went wrong,Try again!", "danger");
 		}
 		session.setAttribute("message", message);
-		return "redirect:/manageAlbums";
+		return "redirect:/admin/manageAlbumImages/"+albumId;
 	}
+	
+	@GetMapping("/admin/manageAlbumImages/deleteImage/{albumId}/{fileName}.{fileFormat}")
+	public String deleteImageFromAlbum(
+			@PathVariable("albumId") int albumId,
+			@PathVariable("fileName") String fileName,
+			@PathVariable("fileFormat") String fileFormat,
+			HttpSession session
+			) {
+		
+		Message message;
+		
+		if(galleryDao.deleteImageFromAlbum(albumId,fileName,fileFormat,session)) {
+			message=new Message("Image deleted", "success");
+		}
+		else {
+			message=new Message("Something went wrong!", "danger");
+		}
+		session.setAttribute("message", message);
+		return "redirect:/admin/manageAlbumImages/"+albumId;
+	}
+	
+	@GetMapping("/admin/manageAlbumImages/setImageAsCover/{albumId}/{fileName}.{fileFormat}")
+	public String setAlbumCover(
+			@PathVariable("albumId") int albumId,
+			@PathVariable("fileName") String fileName,
+			@PathVariable("fileFormat") String fileFormat,
+			HttpSession session
+			) {
+		
+		Message message;
+		
+		if(galleryDao.setImageAsAlbumCover(albumId,fileName,fileFormat)) {
+			message=new Message("Image set as album cover photo!", "success");
+		}
+		else {
+			message=new Message("Something went wrong!", "danger");
+		}
+		session.setAttribute("message", message);
+		return "redirect:/admin/manageAlbumImages/"+albumId;
+	}
+	
+	
 	
 }
